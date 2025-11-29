@@ -52,16 +52,24 @@ cd ..
 
 Adding CachyOS updates system libraries that conflict with the stock Hyprland. We must reinstall Hyprland to match the new libraries.
 1. Force remove the old conflicting Hyprland binary
-    ```sudo pacman -Rdd hyprland```
+    ```
+   sudo pacman -Rdd hyprland
+    ```
 
-2. Update the system (Type 'Y' to all replacements)
-    ```sudo pacman -Syu```
+3. Update the system (Type 'Y' to all replacements)
+    ```
+   sudo pacman -Syu
+    ```
 
-3. Reinstall Hyprland (now from CachyOS)
-    ```sudo pacman -S hyprland```
+5. Reinstall Hyprland (now from CachyOS)
+    ```
+   sudo pacman -S hyprland
+    ```
 
-4. Install Nano (text editor)
-    ```sudo pacman -S nano```
+7. Install Nano (text editor)
+    ```
+   sudo pacman -S nano
+    ```
 
 ### 3. Install CachyOS Kernel
 
