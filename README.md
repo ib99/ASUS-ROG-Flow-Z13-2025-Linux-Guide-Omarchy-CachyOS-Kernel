@@ -192,25 +192,42 @@ bind = , XF86KbdBrightnessUp, exec, asusctl kbd_brightness -i
 ## Phase 5: The "ROG Control" Menu
 Create a visual menu to switch power profiles without the terminal.
 
-1.  Create `~/rog-quick.sh`:
-    ```bash
-    #!/bin/bash
-    options="🔇 Silent\n⚖️ Balanced\n🚀 Performance\n⚡ Turbo 95W\n🔋 Limit 80%\n🔌 Limit 100%"
-    selected=$(echo -e "$options" | wofi --dmenu --prompt "ROG Control")
-    case $selected in
-      "🔇 Silent") asusctl profile -P Quiet && notify-send "ROG" "Silent Mode" ;;
-      "⚖️ Balanced") asusctl profile -P Balanced && notify-send "ROG" "Balanced Mode" ;;
-      "🚀 Performance") asusctl profile -P Performance && notify-send "ROG" "Performance Mode" ;;
-      "⚡ Turbo 95W") 
-          asusctl profile -P Performance
-          asusctl power-limits -s 95000 
-          notify-send "ROG" "Turbo 95W Active" ;;
-      "🔋 Limit 80%") asusctl -c 80 && notify-send "Battery" "Capped at 80%" ;;
-      "🔌 Limit 100%") asusctl -c 100 && notify-send "Battery" "Uncapped" ;;
-    esac
-    ```
-2.  Make executable: `chmod +x ~/rog-quick.sh`
-3.  **Waybar Integration:** Add this module to `~/.config/waybar/config`:
+Step 1: Create and Open the File
+    
+Run this command. It will open a new, blank file named rog-quick.sh in your home director
+        
+        
+        nano ~/rog-quick.sh
+        
+Step 2: Paste the Script
+    
+Now, copy the entire script block below and paste it into the nano editor (usually Ctrl+Shift+V in the terminal).
+    
+        #!/bin/bash
+        options="🔇 Silent\n⚖️ Balanced\n🚀 Performance\n⚡ Turbo 95W\n🔋 Limit 80%\n🔌 Limit 100%"
+        selected=$(echo -e "$options" | wofi --dmenu --prompt "ROG Control")
+        case $selected in
+          "🔇 Silent") asusctl profile -P Quiet && notify-send "ROG" "Silent Mode" ;;
+          "⚖️ Balanced") asusctl profile -P Balanced && notify-send "ROG" "Balanced Mode" ;;
+          "🚀 Performance") asusctl profile -P Performance && notify-send "ROG" "Performance Mode" ;;
+          "⚡ Turbo 95W") 
+              asusctl profile -P Performance
+              asusctl power-limits -s 95000 
+              notify-send "ROG" "Turbo 95W Active" ;;
+          "🔋 Limit 80%") asusctl -c 80 && notify-send "Battery" "Capped at 80%" ;;
+          "🔌 Limit 100%") asusctl -c 100 && notify-send "Battery" "Uncapped" ;;
+        esac
+        
+Step 3: Save and Exit
+    
+        Press Ctrl + O (this means "Write Out" or Save).
+    
+        Press Enter to confirm the filename.
+    
+        Press Ctrl + X to exit the editor.
+    
+3.  Make executable: `chmod +x ~/rog-quick.sh`
+4.  **Waybar Integration:** Add this module to `~/.config/waybar/config`:
     ```json
     "custom/asus": {
         "format": "⚡ {}",
