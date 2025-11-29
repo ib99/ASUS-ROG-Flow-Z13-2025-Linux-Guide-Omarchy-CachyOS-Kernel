@@ -59,6 +59,29 @@ Adding CachyOS updates system libraries that conflict with the stock Hyprland. W
 ```sudo pacman -S hyprland```
 4. Install Nano (text editor)
 ```sudo pacman -S nano```
+
+### 3. Install CachyOS Kernel
+
+The Limine bootloader will automatically detect this kernel after installation.  
+Install Kernel & Headers
+```sudo pacman -S linux-cachyos linux-cachyos-headers```
+
+### 4. Install ASUS Tools
+
+Add G14 Repo
+```sudo bash -c 'cat <<EOF >> /etc/pacman.conf
+
+[g14]
+Server = https://arch.asus-linux.org
+EOF'
+```
+
+Import Keys & Install
+```
+sudo pacman-key --recv-keys 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35
+sudo pacman-key --lsign-key 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35
+sudo pacman -Sy asusctl rog-control-center
+```
   
 ---
 
