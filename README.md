@@ -228,7 +228,7 @@ Step 3: Save and Exit
     
 3.  Make executable:
     ```
-    chmod +x ~/rog-quick.sh`
+    chmod +x ~/rog-quick.sh
     ```
     
 5. **Waybar Integration:** Add this module to `~/.config/waybar/config`:
