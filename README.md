@@ -143,6 +143,22 @@ The daemon may fail to enable out of the box on minimal installs due to a missin
 ## Phase 4: Hyprland Configuration
 Add the following to your `~/.config/hypr/hyprland.conf`:
 
+Step 1: Open the Config File
+
+You need to open the file in the nano text editor you installed earlier.
+
+Run this command in your terminal:
+```    
+nano ~/.config/hypr/hyprland.conf
+```
+Step 2: Scroll to the Bottom
+
+Use the Down Arrow key on your keyboard to scroll all the way to the very end of the file. It is safer to add new settings at the bottom so you don't accidentally break existing ones.
+
+Step 3: Paste the Configuration
+
+Copy the block below and paste it into the editor (usually Ctrl+Shift+V in the terminal):
+
   ```ini
   # --- ASUS ROG Flow Z13 (2025) Hardware ---
   # High-DPI Scaling (2.0 is crisp, 1.6 for more space)
