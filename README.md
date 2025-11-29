@@ -226,8 +226,12 @@ Step 3: Save and Exit
     
         Press Ctrl + X to exit the editor.
     
-3.  Make executable: `chmod +x ~/rog-quick.sh`
-4.  **Waybar Integration:** Add this module to `~/.config/waybar/config`:
+3.  Make executable:
+    ```
+    chmod +x ~/rog-quick.sh`
+    ```
+    
+5. **Waybar Integration:** Add this module to `~/.config/waybar/config`:
     ```json
     "custom/asus": {
         "format": "⚡ {}",
