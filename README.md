@@ -36,38 +36,72 @@ Because this device features the **AMD Ryzen AI Max (Strix Halo)** architecture,
 ---
 
 ## Phase 1: The Engine (Kernel & Drivers)
+We replace the generic kernel with **CachyOS** and install the ASUS control stack.
 
-1. Install CachyOS Kernel
-        
-    Install the CachyOS Repo Helper
-    ```
-    curl https://mirror.cachyos.org/cachyos-repo.tar.xz -o cachyos-repo.tar.xz
-    tar xvf cachyos-repo.tar.xz
-    cd cachyos-repo
-    sudo ./cachyos-repo.sh
-    cd ..
-    ```
-    Install Kernel & Headers
-    ```
-    sudo pacman -Syu linux-cachyos linux-cachyos-headers
-    ```  
-    
+1. Install CachyOS Repositories
+```bash
+# Install the CachyOS Repo Helper
+curl https://mirror.cachyos.org/cachyos-repo.tar.xz -o cachyos-repo.tar.xz
+tar xvf cachyos-repo.tar.xz
+cd cachyos-repo
+sudo ./cachyos-repo.sh
+cd ..
+```
 2. Install ASUS Tools
-    Add G14 Repo
-   ```
-   sudo bash -c 'cat <<EOF >> /etc/pacman.conf
+Add G14 Repo
+```
+sudo bash -c 'cat <<EOF >> /etc/pacman.conf
+    
+[g14]
+Server = https://arch.asus-linux.org
+EOF'
+```
         
-   [g14]
-   Server = https://arch.asus-linux.org
-   EOF'
-   ```
-        
-    Import Keys & Install
-   ```
-   sudo pacman-key --recv-keys 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35
-   sudo pacman-key --lsign-key 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35
-   sudo pacman -Sy asusctl rog-control-center
-   ```
+Import Keys & Install
+```
+sudo pacman-key --recv-keys 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35
+sudo pacman-key --lsign-key 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35
+sudo pacman -Sy asusctl rog-control-center
+```
+3. Fix Hyprland Dependencies (Critical)
+
+Adding CachyOS updates system libraries that conflict with the stock Hyprland. We must reinstall Hyprland to match the new libraries.
+    1. Force remove the old conflicting Hyprland binary
+    ```sudo pacman -Rdd hyprland```
+    2. Update the system (Type 'Y' to all replacements)
+    ```sudo pacman -Syu```
+    3. Reinstall Hyprland (now from CachyOS)
+    ```sudo pacman -S hyprland
+    
+    4. Install Nano (text editor)
+    sudo pacman -S nano
+
+4. Install CachyOS Kernel
+
+The Limine bootloader will automatically detect this kernel after installation.
+code Bash
+
+    
+# Install Kernel & Headers
+sudo pacman -S linux-cachyos linux-cachyos-headers
+
+4. Install ASUS Tools
+code Bash
+
+    
+# Add G14 Repo
+sudo bash -c 'cat <<EOF >> /etc/pacman.conf
+
+[g14]
+Server = https://arch.asus-linux.org
+EOF'
+
+# Import Keys & Install
+sudo pacman-key --recv-keys 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35
+sudo pacman-key --lsign-key 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35
+sudo pacman -Sy asusctl rog-control-center
+
+  
   
 ---
 
