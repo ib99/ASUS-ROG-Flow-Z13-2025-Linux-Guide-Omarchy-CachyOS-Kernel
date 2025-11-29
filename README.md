@@ -35,6 +35,42 @@ Because this device features the **AMD Ryzen AI Max (Strix Halo)** architecture,
 
 ---
 
+## Phase 1: The Engine (Kernel & Drivers)
+
+1. Install CachyOS Kernel
+        
+    Install the CachyOS Repo Helper
+    ```
+    curl https://mirror.cachyos.org/cachyos-repo.tar.xz -o cachyos-repo.tar.xz
+    tar xvf cachyos-repo.tar.xz
+    cd cachyos-repo
+    sudo ./cachyos-repo.sh
+    cd ..
+    ```
+    Install Kernel & Headers
+    ```
+    sudo pacman -Syu linux-cachyos linux-cachyos-headers
+    ```  
+    
+2. Install ASUS Tools
+    Add G14 Repo
+   ```
+   sudo bash -c 'cat <<EOF >> /etc/pacman.conf
+        
+   [g14]
+   Server = https://arch.asus-linux.org
+   EOF'
+   ```
+        
+    Import Keys & Install
+   ```
+   sudo pacman-key --recv-keys 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35
+   sudo pacman-key --lsign-key 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35
+   sudo pacman -Sy asusctl rog-control-center
+   ```
+  
+---
+
 ## Phase 2: The `asusd` Service Fix
 The daemon may fail to enable out of the box on minimal installs due to a missing install section. Fix it manually:
 
