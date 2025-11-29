@@ -208,5 +208,5 @@ I am not responsible for bricked devices, dead SD cards, thermonuclear war, or y
 
 ---
 
-## 📜 License
+## License
 This project is licensed under the MIT License - feel free to use, modify, and distribute.
