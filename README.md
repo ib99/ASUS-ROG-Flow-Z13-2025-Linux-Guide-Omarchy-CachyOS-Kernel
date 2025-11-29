@@ -36,67 +36,63 @@ Because this device features the **AMD Ryzen AI Max (Strix Halo)** architecture,
 ---
 
 ## Phase 1: The Engine (Kernel & Drivers)
-We replace the generic kernel with **CachyOS** and install the ASUS control stack.
+We replace the generic kernel with CachyOS and install the ASUS control stack.
+1. Install CachyOS Repositories
 
-### 1. Install CachyOS Repositories
+    Install the CachyOS Repo Helper
+       
+        curl https://mirror.cachyos.org/cachyos-repo.tar.xz -o cachyos-repo.tar.xz
+        tar xvf cachyos-repo.tar.xz
+        cd cachyos-repo
+        sudo ./cachyos-repo.sh
+        cd ..
 
-Install the CachyOS Repo Helper
-```
-curl https://mirror.cachyos.org/cachyos-repo.tar.xz -o cachyos-repo.tar.xz
-tar xvf cachyos-repo.tar.xz
-cd cachyos-repo
-sudo ./cachyos-repo.sh
-cd ..
-```  
-### 2. Fix Hyprland Dependencies (Critical)
+2. Fix Hyprland Dependencies (Critical)
+   Adding CachyOS updates system libraries that conflict with the stock Hyprland. We must reinstall Hyprland to match the new libraries.
 
-Adding CachyOS updates system libraries that conflict with the stock Hyprland. We must reinstall Hyprland to match the new libraries.
-1. Force remove the old conflicting Hyprland binary
+    1. Force remove the old conflicting Hyprland binary and its tools
     ```
-   sudo pacman -Rdd hyprland
+    sudo pacman -Rdd hyprland hyprlock hyprtoolkit
     ```
-
-3. Update the system (Type 'Y' to all replacements)
+    2. Update the system (Type 'Y' to all replacements)
     ```
-   sudo pacman -Syu
+    sudo pacman -Syu
     ```
-
-5. Reinstall Hyprland (now from CachyOS)
+    3. Reinstall the Hyprland desktop (now from CachyOS)
     ```
-   sudo pacman -S hyprland
+    sudo pacman -S hyprland hyprlock hyprtoolkit
     ```
-
-7. Install Nano (text editor)
+    4. Install Nano (text editor) for later phases
     ```
-   sudo pacman -S nano
+    sudo pacman -S nano
     ```
 
-### 3. Install CachyOS Kernel
+3. Install CachyOS Kernel
+    The Limine bootloader will automatically detect this kernel after installation.
 
-The Limine bootloader will automatically detect this kernel after installation.  
-Install Kernel & Headers
-```
-sudo pacman -S linux-cachyos linux-cachyos-headers
-```
+    Install Kernel & Headers
+    ```
+    sudo pacman -S linux-cachyos linux-cachyos-headers
+    ```
+4. Install ASUS Tools
 
-### 4. Install ASUS Tools
+    Add G14 Repo
+    ```
+    sudo bash -c 'cat <<EOF >> /etc/pacman.conf
 
-Add G14 Repo
-```
-sudo bash -c 'cat <<EOF >> /etc/pacman.conf
+    [g14]
+    Server = https://arch.asus-linux.org
+    EOF'
+    ```
+    
+    Import Keys & Install
+    ```
+    sudo pacman-key --recv-keys 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35
+    sudo pacman-key --lsign-key 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35
+    sudo pacman -Sy asusctl rog-control-center
+    ```  
 
-[g14]
-Server = https://arch.asus-linux.org
-EOF'
-```
-
-Import Keys & Install
-```
-sudo pacman-key --recv-keys 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35
-sudo pacman-key --lsign-key 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35
-sudo pacman -Sy asusctl rog-control-center
-```
-  
+    
 ---
 
 ## Phase 2: The `asusd` Service Fix
