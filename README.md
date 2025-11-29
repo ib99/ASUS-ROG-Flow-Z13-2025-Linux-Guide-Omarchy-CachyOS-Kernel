@@ -160,30 +160,32 @@ Step 3: Paste the Configuration
 Copy the block below and paste it into the editor (usually Ctrl+Shift+V in the terminal):
 
   ```ini
-  # --- ASUS ROG Flow Z13 (2025) Hardware ---
-  # High-DPI Scaling (2.0 is crisp, 1.6 for more space)
-  monitor = eDP-1, preferred, auto, 2
-  
-  # Auto-Rotation
-  exec-once = iio-hyprland
-  
-  # Tablet Input Mapping
-  input {
-      tablet { transform = 0; output = eDP-1; }
-  }
-  
-  # --- Keybinds ---
-  # Virtual Keyboard (Super + V)
-  bind = $mainMod, V, exec, pkill wvkbd-mobintl || wvkbd-mobintl -L 300
-  
-  # ROG Power Menu (Dedicated Side Button / Super + A)
-  # Note: Use 'wev' to verify side button code if XF86Launch1 doesn't work
-  bind = , XF86Launch1, exec, ~/rog-quick.sh
-  bind = $mainMod, A, exec, ~/rog-quick.sh
-  
-  # Keyboard Backlight
-  bind = , XF86KbdBrightnessDown, exec, asusctl kbd_brightness -d
-  bind = , XF86KbdBrightnessUp, exec, asusctl kbd_brightness -i
+# --- ASUS ROG Flow Z13 (2025) Hardware ---
+# High-DPI Scaling
+monitor = eDP-1, preferred, auto, 2
+
+# Auto-Rotation
+exec-once = iio-hyprland
+
+# Tablet Input Mapping (Fixed formatting)
+input {
+    tablet {
+        transform = 0
+        output = eDP-1
+    }
+}
+
+# --- Keybinds ---
+# Virtual Keyboard (Super + V)
+bind = SUPER, V, exec, pkill wvkbd-mobintl || wvkbd-mobintl -L 300
+
+# ROG Power Menu (Dedicated Side Button / Super + A)
+bind = , XF86Launch1, exec, ~/rog-quick.sh
+bind = SUPER, A, exec, ~/rog-quick.sh
+
+# Keyboard Backlight
+bind = , XF86KbdBrightnessDown, exec, asusctl kbd_brightness -d
+bind = , XF86KbdBrightnessUp, exec, asusctl kbd_brightness -i
   ```
 ---
 
