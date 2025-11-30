@@ -180,7 +180,7 @@ input {
 bind = SUPER, V, exec, pkill wvkbd-mobintl || wvkbd-mobintl -L 300
 
 # ROG Power Menu (Dedicated Side Button / Super + A)
-bind = , XF86Launch1, exec, ~/rog-quick.sh
+bind = , XF86Launch3, exec, ~/rog-quick.sh
 bind = SUPER, A, exec, ~/rog-quick.sh
 
 # Keyboard Backlight
