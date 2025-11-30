@@ -183,9 +183,8 @@ bind = SUPER, V, exec, pkill wvkbd-mobintl || wvkbd-mobintl -L 300
 bind = , XF86Launch3, exec, ~/rog-quick.sh
 bind = SUPER, A, exec, ~/rog-quick.sh
 
-# Keyboard Backlight
-bind = , XF86KbdBrightnessDown, exec, asusctl kbd_brightness -d
-bind = , XF86KbdBrightnessUp, exec, asusctl kbd_brightness -i
+# Keyboard Backlight (Fn + F11 Cycle Modes)
+bind = , XF86KbdLightOnOff, exec, asusctl -n
   ```
 ---
 
