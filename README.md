@@ -228,15 +228,28 @@ Step 3: Save and Exit
     
         chmod +x ~/rog-quick.sh
     
-5. **Waybar Integration:** Add this module to `~/.config/waybar/config`:
-        ```json
-    "custom/asus": {
-        "format": "⚡ {}",
-        "exec": "asusctl profile -p | sed 's/Active profile is //'",
-        "interval": 5,
-        "on-click": "~/rog-quick.sh"
-    }
-        ```
+5. **Waybar Integration:**
+    We need to add the battery module to the status bar.
+    Open the configuration file:
+   
+        nano ~/.config/waybar/config.jsonc
+
+    Part A: Define the Module
+            Scroll to the bottom of the file. Paste this block inside the final closing bracket }, but make sure to add a comma , to the block above it!
+
+               "custom/asus": {
+               "format": "⚡ {}",
+               "exec": "asusctl profile -p | sed 's/Active profile is //'",
+               "interval": 5,
+               "on-click": "~/rog-quick.sh"
+               }
+    Part B: Position the Module
+            Scroll to the top and find the line starting with "modules-right". Add "custom/asus" to the list.
+            Example:
+
+                "modules-right": ["custom/asus", "network", "cpu", ...],
+
+    Save and Exit.
 
 ---
 
