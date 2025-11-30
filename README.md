@@ -281,11 +281,23 @@ The script in Phase 5 includes a "Turbo 95W" option.
 
   To Reset: Select a different profile or run asusctl power-limits --restore.
 
-### C. Hardware Notes
+### C. Hardware Notes & Verification
+*   **Pen Support:** **Verified:** Microsoft Surface Pen 2 works out of the box with full pressure sensitivity and rear eraser support.
+*   **Side Shortcut Button:** Mapped to `XF86Launch3` (on 2025 models). Perfect for triggering the Power Menu or Virtual Keyboard.
+*   **USB-C Charging:** Third-party chargers work (65W-100W) but ASUS firmware may lock out the highest "Turbo" TDP modes. Use the official brick for heavy gaming.
 
-  Side Shortcut Button: Mapped to XF86Launch1 (usually). Perfect for triggering the Power Menu or Virtual Keyboard.
+### D. Battery Saver: Hardware Video Decode
+By default, browsers may use the CPU to decode video, which drains battery. Enable the GPU's media engine to save power.
 
-  USB-C Charging: Third-party chargers work (65W-100W) but ASUS firmware may lock out the highest "Turbo" TDP modes. Use the official brick for heavy gaming.
+1.  **Install AMD Media Drivers:**
+    ```bash
+    sudo pacman -S libva-mesa-driver
+    ```
+2.  **Enable in Firefox:**
+    *   Type `about:config` in the address bar.
+    *   Search for `media.ffmpeg.vaapi.enabled`.
+    *   Set it to **true**.
+3.  **Result:** YouTube/Netflix will now use the efficient Strix Halo media engine instead of the CPU.
 
 ---
 
