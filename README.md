@@ -22,7 +22,7 @@ Because this device features the **AMD Ryzen AI Max (Strix Halo)** architecture,
 
 ---
 
-## Phase 0: The Golden Rule (Update First)
+## Phase 0: Update First
 **Do not skip this.** Installing custom kernels on an outdated base will break the system.
 
 1.  Connect to Wi-Fi.
