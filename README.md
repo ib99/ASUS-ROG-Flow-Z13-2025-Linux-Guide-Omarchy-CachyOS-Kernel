@@ -125,6 +125,7 @@ The daemon may fail to enable out of the box on minimal installs due to a missin
         yay -S linux-firmware-git --overwrite '*'
     
    _Critical: If prompted :: linux-firmware-git and linux-firmware are in conflict, type y (Yes) to remove the old version._
+   
    _Note: The --overwrite '*' flag is necessary to replace the existing stock firmware files without errors._
    
 3. Tablet Utilities
@@ -218,17 +219,12 @@ Now, copy the entire script block below and paste it into the nano editor (usual
         
 Step 3: Save and Exit
     
-        Press Ctrl + O (this means "Write Out" or Save).
-    
-        Press Enter to confirm the filename.
-    
-        Press Ctrl + X to exit the editor.
     
 3.  Make executable:
     
         chmod +x ~/rog-quick.sh
     
-5. **Waybar Integration:**
+4. **Waybar Integration:**
     We need to add the battery module to the status bar.
     Open the configuration file:
    
