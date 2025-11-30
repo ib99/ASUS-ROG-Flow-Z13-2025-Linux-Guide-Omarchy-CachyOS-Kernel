@@ -35,8 +35,8 @@ Because this device features the **AMD Ryzen AI Max (Strix Halo)** architecture,
 
 ---
 
-## Phase 1: The Engine (Kernel & Drivers)
-We replace the generic kernel with CachyOS and install the ASUS control stack.
+## Phase 1: Kernel & Drivers
+We replace the generic kernel with CachyOS and install the ASUS control stack using a specific sequence to avoid repository conflicts.
 1. Install CachyOS Repositories
 
     Install the CachyOS Repo Helper
@@ -46,52 +46,58 @@ We replace the generic kernel with CachyOS and install the ASUS control stack.
         cd cachyos-repo
         sudo ./cachyos-repo.sh
         cd ..
+   
+   _Note: The script will automatically try to update and will likely fail with a dependency error. This is expected. Proceed to the next step to resolve it._
 
-2. Fix Hyprland Dependencies (Critical)
-   Adding CachyOS updates system libraries that conflict with the stock Hyprland. We must reinstall Hyprland to match the new libraries.
+2. Resolve Hyprland Dependencies
+   
+    This sequence re-aligns your system to prevent conflicts between the Omarchy and CachyOS packages.
+   
+    i. Temporarily disable CachyOS Repos:
+        Open /etc/pacman.conf and comment out all CachyOS entries by adding a # at the beginning of each line.
+   
+           sudo nano /etc/pacman.conf
 
-    1. Force remove the old conflicting Hyprland binary and its tools
-    ```
-    sudo pacman -Rdd hyprland hyprlock hyprtoolkit
-    ```
-    2. Update the system (Type 'Y' to all replacements)
-    ```
-    sudo pacman -Syu
-    ```
-    3. Reinstall the Hyprland desktop (now from CachyOS)
-    ```
-    sudo pacman -S hyprland hyprlock hyprtoolkit
-    ```
-    4. Install Nano (text editor) for later phases
-    ```
-    sudo pacman -S nano
-    ```
-
-3. Install CachyOS Kernel
+    ii. Force Sync to Stable Repos
+        This aligns your system back to the pure Arch/Omarchy repositories. The yy is important.
+           
+           sudo pacman -Syyu
+           
+    iii. Reinstall Desktop Environment
+           Ensure you are using the stable Omarchy versions:
+           
+           sudo pacman -S hyprland hyprlock hyprtoolkit
+           
+    iv. Re-Enable CachyOS Repos
+        Open /etc/pacman.conf again and remove the # symbols you just added.
+           
+           sudo nano /etc/pacman.conf
+           
+4. Install CachyOS Kernel
     The Limine bootloader will automatically detect this kernel after installation.
 
     Install Kernel & Headers
-    ```
-    sudo pacman -S linux-cachyos linux-cachyos-headers
-    ```
-4. Install ASUS Tools
+    
+        sudo pacman -S linux-cachyos linux-cachyos-headers
+    
+5. Install ASUS Tools
 
     Add G14 Repo
-    ```
-    sudo bash -c 'cat <<EOF >> /etc/pacman.conf
-
-    [g14]
-    Server = https://arch.asus-linux.org
-    EOF'
-    ```
+    
+        sudo bash -c 'cat <<EOF >> /etc/pacman.conf
+    
+        [g14]
+        Server = https://arch.asus-linux.org
+        EOF'
+    
     
     Import Keys & Install
-    ```
-    sudo pacman-key --recv-keys 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35
-    sudo pacman-key --lsign-key 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35
-    sudo pacman -Sy asusctl rog-control-center
-    ```  
-
+    
+        sudo pacman-key --recv-keys 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35
+        sudo pacman-key --lsign-key 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35
+        sudo pacman -Sy asusctl rog-control-center
+    
+6. Reboot
     
 ---
 
@@ -99,41 +105,41 @@ We replace the generic kernel with CachyOS and install the ASUS control stack.
 The daemon may fail to enable out of the box on minimal installs due to a missing install section. Fix it manually:
 
 1.  Edit the service file:
-    ```bash
-    sudo nano /usr/lib/systemd/system/asusd.service
-    ```
+    
+        sudo nano /usr/lib/systemd/system/asusd.service
+    
 2.  Add this block to the very bottom of the file:
-    ```ini
-    [Install]
-    WantedBy=multi-user.target
-    ```
+        ```ini
+        [Install]
+        WantedBy=multi-user.target```
+    
 3.  Reload and Enable:
-    ```bash
-    sudo systemctl daemon-reload
-    sudo systemctl enable --now asusd
-    ```
+    
+        sudo systemctl daemon-reload
+        sudo systemctl enable --now asusd
+    
 
 ---
 
 ## Phase 3: Hardware Support (Firmware & Tablet)
 
 1. Bleeding-Edge Firmware
-  Required for 2025 Audio and NPU support.
-    ```bash  
-    yay -S linux-firmware-git
-    ```
+      Required for 2025 Audio and NPU support.
+    
+        yay -S linux-firmware-git
+    
    _Critical: If prompted :: linux-firmware-git and linux-firmware are in conflict, type y (Yes) to remove the old version._
    
 2. Tablet Utilities
-  Installs rotation, virtual keyboard, and menu tools.
-    ```bash    
-    yay -S iio-hyprland-git wvkbd-mobintl wofi
-    ```
+      Installs rotation, virtual keyboard, and menu tools.
+       
+        yay -S iio-hyprland-git wvkbd-mobintl wofi
+    
 3. Wi-Fi Stability Fix
    Prevents the MediaTek MT7925 card from disconnecting during sleep.
-    ```bash
-    echo "options mt7925e disable_aspm=1" | sudo tee /etc/modprobe.d/mt7925e.conf
-    ```
+ 
+        echo "options mt7925e disable_aspm=1" | sudo tee /etc/modprobe.d/mt7925e.conf
+
 ---
 
 ## Phase 4: Hyprland Configuration
@@ -144,9 +150,9 @@ Step 1: Open the Config File
 You need to open the file in the nano text editor you installed earlier.
 
 Run this command in your terminal:
-```    
-nano ~/.config/hypr/hyprland.conf
-```
+  
+    nano ~/.config/hypr/hyprland.conf
+
 Step 2: Scroll to the Bottom
 
 Use the Down Arrow key on your keyboard to scroll all the way to the very end of the file. It is safer to add new settings at the bottom so you don't accidentally break existing ones.
@@ -191,8 +197,7 @@ Create a visual menu to switch power profiles without the terminal.
 Step 1: Create and Open the File
     
 Run this command. It will open a new, blank file named rog-quick.sh in your home director
-        
-        
+                
         nano ~/rog-quick.sh
         
 Step 2: Paste the Script
@@ -223,19 +228,18 @@ Step 3: Save and Exit
         Press Ctrl + X to exit the editor.
     
 3.  Make executable:
-    ```
-    chmod +x ~/rog-quick.sh
-    ```
+    
+        chmod +x ~/rog-quick.sh
     
 5. **Waybar Integration:** Add this module to `~/.config/waybar/config`:
-    ```json
+        ```json
     "custom/asus": {
         "format": "⚡ {}",
         "exec": "asusctl profile -p | sed 's/Active profile is //'",
         "interval": 5,
         "on-click": "~/rog-quick.sh"
     }
-    ```
+        ```
 
 ---
 
@@ -257,10 +261,10 @@ Reboot and select **CachyOS** from the boot menu.
 
 ### A. Advanced Gaming (HHD)
   If you use the Z13 as a handheld console (gyro/controller support):
-  ```bash
-  yay -S hhd-git
-  sudo systemctl enable --now hhd.service
-  ```
+
+      yay -S hhd-git
+      sudo systemctl enable --now hhd.service
+
   Run hhd-gui to configure gyro and rumble.
   
 ### B. The "Turbo" Mode (Manual TDP)
