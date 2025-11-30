@@ -109,9 +109,9 @@ The daemon may fail to enable out of the box on minimal installs due to a missin
         sudo nano /usr/lib/systemd/system/asusd.service
     
 2.  Add this block to the very bottom of the file:
-        ```ini
+   
         [Install]
-        WantedBy=multi-user.target```
+        WantedBy=multi-user.target
     
 3.  Reload and Enable:
     
