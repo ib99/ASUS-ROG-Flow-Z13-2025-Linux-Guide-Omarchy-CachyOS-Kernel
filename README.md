@@ -83,12 +83,8 @@ We replace the generic kernel with CachyOS and install the ASUS control stack us
 5. Install ASUS Tools
 
     Add G14 Repo
-    
-        sudo bash -c 'cat <<EOF >> /etc/pacman.conf
-    
-        [g14]
-        Server = https://arch.asus-linux.org
-        EOF'
+   
+        echo -e "\n[g14]\nServer = https://arch.asus-linux.org" | sudo tee -a /etc/pacman.conf
     
     
     Import Keys & Install
@@ -97,7 +93,7 @@ We replace the generic kernel with CachyOS and install the ASUS control stack us
         sudo pacman-key --lsign-key 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35
         sudo pacman -Sy asusctl rog-control-center
     
-6. Reboot
+7. Reboot
     
 ---
 
@@ -126,16 +122,17 @@ The daemon may fail to enable out of the box on minimal installs due to a missin
 1. Bleeding-Edge Firmware
       Required for 2025 Audio and NPU support.
     
-        yay -S linux-firmware-git
+        yay -S linux-firmware-git --overwrite '*'
     
    _Critical: If prompted :: linux-firmware-git and linux-firmware are in conflict, type y (Yes) to remove the old version._
+   _Note: The --overwrite '*' flag is necessary to replace the existing stock firmware files without errors._
    
-2. Tablet Utilities
+3. Tablet Utilities
       Installs rotation, virtual keyboard, and menu tools.
        
         yay -S iio-hyprland-git wvkbd-mobintl wofi
     
-3. Wi-Fi Stability Fix
+4. Wi-Fi Stability Fix
    Prevents the MediaTek MT7925 card from disconnecting during sleep.
  
         echo "options mt7925e disable_aspm=1" | sudo tee /etc/modprobe.d/mt7925e.conf
