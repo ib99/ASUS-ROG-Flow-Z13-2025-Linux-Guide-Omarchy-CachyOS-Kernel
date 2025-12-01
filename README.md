@@ -131,7 +131,7 @@ The daemon may fail to enable out of the box on minimal installs due to a missin
 3. Tablet Utilities
       Installs rotation, virtual keyboard, and menu tools.
        
-        yay -S iio-hyprland-git wvkbd-mobintl wofi
+        yay -S iio-hyprland-git wvkbd-mobintl rofi-wayland
     
 4. Wi-Fi Stability Fix
    Prevents the MediaTek MT7925 card from disconnecting during sleep.
@@ -201,20 +201,22 @@ Step 2: Paste the Script
     
 Now, copy the entire script block below and paste it into the nano editor (usually Ctrl+Shift+V in the terminal).
     
-        #!/bin/bash
-        options="🔇 Silent\n⚖️ Balanced\n🚀 Performance\n⚡ Turbo 95W\n🔋 Limit 80%\n🔌 Limit 100%"
-        selected=$(echo -e "$options" | wofi --dmenu --prompt "ROG Control")
-        case $selected in
-          "🔇 Silent") asusctl profile -P Quiet && notify-send "ROG" "Silent Mode" ;;
-          "⚖️ Balanced") asusctl profile -P Balanced && notify-send "ROG" "Balanced Mode" ;;
-          "🚀 Performance") asusctl profile -P Performance && notify-send "ROG" "Performance Mode" ;;
-          "⚡ Turbo 95W") 
-              asusctl profile -P Performance
-              asusctl power-limits -s 95000 
-              notify-send "ROG" "Turbo 95W Active" ;;
-          "🔋 Limit 80%") asusctl -c 80 && notify-send "Battery" "Capped at 80%" ;;
-          "🔌 Limit 100%") asusctl -c 100 && notify-send "Battery" "Uncapped" ;;
-        esac
+    #!/bin/bash
+    options="🔇 Silent\n⚖️ Balanced\n🚀 Performance\n⚡ Turbo 95W\n🔋 Limit 80%\n🔌 Limit 100%"
+    
+    selected=$(echo -e "$options" | rofi -dmenu -p "ROG Control")
+    
+    case $selected in
+      "🔇 Silent") asusctl profile -P Quiet && notify-send "ROG" "Silent Mode" ;;
+      "⚖️ Balanced") asusctl profile -P Balanced && notify-send "ROG" "Balanced Mode" ;;
+      "🚀 Performance") asusctl profile -P Performance && notify-send "ROG" "Performance Mode" ;;
+      "⚡ Turbo 95W") 
+          asusctl profile -P Performance
+          asusctl power-limits -s 95000 
+          notify-send "ROG" "Turbo 95W Active" ;;
+      "🔋 Limit 80%") asusctl -c 80 && notify-send "Battery" "Capped at 80%" ;;
+      "🔌 Limit 100%") asusctl -c 100 && notify-send "Battery" "Uncapped" ;;
+    esac
         
 Step 3: Save and Exit
     
