@@ -234,12 +234,14 @@ Step 3: Save and Exit
     Part A: Define the Module
             Scroll to the bottom of the file. Paste this block inside the final closing bracket }, but make sure to add a comma , to the block above it!
 
-               "custom/asus": {
-               "format": "⚡ {}",
-               "exec": "asusctl profile -p | sed 's/Active profile is //'",
-               "interval": 5,
-               "on-click": "~/rog-quick.sh"
-               }
+         "custom/asus": {
+                "format": "⚡ {}",
+                "exec": "asusctl profile -p | sed 's/Active profile is //'",
+                "interval": 5,
+                "on-click": "~/rog-quick.sh",
+                "tooltip": true,
+                "tooltip-format": "Current Power Profile: {}"
+            }
     Part B: Position the Module
             Scroll to the top and find the line starting with "modules-right". Add "custom/asus" to the list.
             Example:
