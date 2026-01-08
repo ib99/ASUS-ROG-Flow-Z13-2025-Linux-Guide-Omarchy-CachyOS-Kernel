@@ -236,7 +236,7 @@ Step 3: Save and Exit
 
          "custom/asus": {
                 "format": "⚡ {} ",
-                "exec": "asusctl profile -p | sed -n 's/^Active profile is //p'",
+                "exec": "asusctl profile -p 2>/dev/null | sed -n 's/^Active profile is //p' | tr -d '\n' && printf ' '",
                 "interval": 5,
                 "on-click": "~/rog-quick.sh",
                 "tooltip": true,
