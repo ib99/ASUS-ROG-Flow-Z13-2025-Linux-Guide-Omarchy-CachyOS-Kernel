@@ -235,8 +235,8 @@ Step 3: Save and Exit
             Scroll to the bottom of the file. Paste this block inside the final closing bracket }, but make sure to add a comma , to the block above it!
 
          "custom/asus": {
-                "format": "⚡ {}",
-                "exec": "asusctl profile -p | sed 's/Active profile is //'",
+                "format": "⚡ {} ",
+                "exec": "asusctl profile -p 2>/dev/null | sed -n 's/^Active profile is //p' | tr -d '\n' && printf ' '",
                 "interval": 5,
                 "on-click": "~/rog-quick.sh",
                 "tooltip": true,
